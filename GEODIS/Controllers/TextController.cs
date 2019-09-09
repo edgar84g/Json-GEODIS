@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
@@ -21,10 +20,9 @@ namespace GEODIS.Controllers
         }
 
 
-       
 
-        [HttpPut("api/userJ")]
-        public string put([FromBody]JObject s)
+        [HttpPut("api/users")]
+        public string users([FromBody] string s)
         {
             if (s == null)
                 return "";
@@ -32,10 +30,30 @@ namespace GEODIS.Controllers
             return WorkJson(s.ToString());
 
         }
-       
 
-       
+        [HttpPut("api/userALL")]
+        public string userALL([FromBody] List<all> s)
+        {
+            
+            if (s == null)
+                return "";
 
+            return WorkJson(s.ToString());
+        }
+
+        [HttpPut("api/userJ")]
+        public string put([FromBody] JArray s)
+        {
+          
+            if (s == null)
+                return "";
+
+            
+            return WorkJson(s.ToString());
+
+        }
+
+        
         [HttpPut("api/user")]
         public IActionResult GetAction([FromBody]string s)
         {
@@ -105,6 +123,7 @@ namespace GEODIS.Controllers
             rJson += ",\"Comments\":" + JsonConvert.SerializeObject(lComments)  ;
 
             return"["+ rJson+"]";
+
         }
 
         private stUser addUser(List<string> lst, int idx, int idxM)
@@ -233,7 +252,12 @@ namespace GEODIS.Controllers
         }
 
     }
-    
+
+    public class all
+    {
+        public List<stUser> luser { get; set; }
+
+    }
 
     public class stUser
     {
